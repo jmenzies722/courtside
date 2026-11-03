@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t courtside-ingest:${{ github.sha }} .
-      - name: Smoke test: image starts and stops cleanly
+      - name: "Smoke test: image starts and stops cleanly"
         run: |
           docker run -d --name smoke -e POLL_SECONDS=2 courtside-ingest:${{ github.sha }}
           sleep 5
