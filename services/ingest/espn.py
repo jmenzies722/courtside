@@ -45,8 +45,8 @@ def _parse(raw: dict, fetched_at: datetime) -> GameEvent:
         game_id=raw["id"],
         home=teams["home"]["team"]["abbreviation"],
         away=teams["away"]["team"]["abbreviation"],
-        home_score=int(teams["home"].get("score") or 0),
-        away_score=int(teams["away"].get("score") or 0),
+        home_score=teams["home"].get("score") or 0,   # pydantic converts "98" -> 98, rejects "N/A"
+        away_score=teams["away"].get("score") or 0,
         status=status["type"]["state"],
         period=status.get("period", 0),
         clock=status.get("displayClock", ""),
