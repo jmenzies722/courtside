@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { GameEvent, GameWithOdds } from "@/lib/types";
 import { team } from "@/lib/teams";
-import { ageSeconds, health, periodLabel } from "@/lib/slo";
+import { ageSeconds, health, periodLabel, replayLabel } from "@/lib/slo";
 import { HealthDot } from "./HealthDot";
 
 // A score that flashes orange when it changes (not on first render).
@@ -39,6 +39,12 @@ function TeamRow({ game, side }: { game: GameEvent; side: "home" | "away" }) {
 }
 
 function Status({ game }: { game: GameEvent }) {
+  if (game.status === "in" && game.replay_of)   // honest label: recorded game, not happening now
+    return (
+      <span className="inline-flex items-center gap-1.5 font-semibold text-amber-300">
+        ⏵ Replay {replayLabel(game.replay_of)} · {periodLabel(game.period)} {game.clock}
+      </span>
+    );
   if (game.status === "in")
     return (
       <span className="inline-flex items-center gap-1.5 font-semibold text-red-400">

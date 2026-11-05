@@ -12,6 +12,7 @@ export interface GameEvent {
   period: number;
   clock: string;
   fetched_at: string; // ISO time WE fetched it: the freshness SLO clock
+  replay_of?: string | null; // YYYYMMDD when this is a recorded game played back
 }
 
 // The API adds this to every game: probability the HOME team wins (0..1).

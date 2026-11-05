@@ -17,6 +17,7 @@ class GameEvent(BaseModel):
     period: int = Field(ge=0)                       # quarter (5+ = overtime)
     clock: str                                      # e.g. "2:31"
     fetched_at: datetime                            # when WE fetched it: the freshness SLO clock
+    replay_of: str | None = None                    # YYYYMMDD if this is a recorded game played back, else live
 
 
 class Play(BaseModel):

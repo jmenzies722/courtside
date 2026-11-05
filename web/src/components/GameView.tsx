@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useGameDetail } from "@/hooks/useGameStream";
 import { team } from "@/lib/teams";
-import { periodLabel } from "@/lib/slo";
+import { periodLabel, replayLabel } from "@/lib/slo";
 import { WinProbChart } from "./WinProbChart";
 import { PlayFeed } from "./PlayFeed";
 import { HealthDot } from "./HealthDot";
@@ -27,8 +27,10 @@ export function GameView({ id }: { id: string }) {
       <section className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
         <div className="mb-4 flex items-center justify-between text-xs uppercase tracking-wider text-slate-400">
           <span className="inline-flex items-center gap-1.5">
-            {game.status === "in" && <HealthDot health="bad" pulse />}
-            {game.status === "in" ? `Live · ${periodLabel(game.period)} ${game.clock}` : game.status === "post" ? "Final" : "Tip-off soon"}
+            {game.status === "in" && !game.replay_of && <HealthDot health="bad" pulse />}
+            {game.status === "in"
+              ? `${game.replay_of ? `⏵ Replay of ${replayLabel(game.replay_of)}` : "Live"} · ${periodLabel(game.period)} ${game.clock}`
+              : game.status === "post" ? `Final${game.replay_of ? ` · ${replayLabel(game.replay_of)}` : ""}` : "Tip-off soon"}
           </span>
           {clutch && <span className="animate-pulse rounded-full bg-orange-500/20 px-3 py-1 font-bold text-orange-300">🔥 Clutch time</span>}
         </div>

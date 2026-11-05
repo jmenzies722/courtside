@@ -29,6 +29,7 @@ class ReplayFeed:
         # seconds from tip-off for every play, from the real timestamps
         self.offsets = [[(p.wallclock - g.plays[0].wallclock).total_seconds() for p in g.plays]
                         for g in self.games]
+        self.date = date
         self.speed, self.clock, self.started = speed, clock, clock()
         self.reached = [0] * len(self.games)   # newest play index each game has reached
         self.sent = [-1] * len(self.games)     # newest play index already handed out
@@ -51,7 +52,7 @@ class ReplayFeed:
                 game_id=game.game_id, home=game.home, away=game.away,
                 home_score=play.home_score, away_score=play.away_score,
                 status="post" if done else "in", period=play.period, clock=play.clock,
-                fetched_at=now,
+                fetched_at=now, replay_of=self.date,
             ))
         return events
 

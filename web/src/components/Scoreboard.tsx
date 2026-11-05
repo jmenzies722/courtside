@@ -2,7 +2,7 @@
 import { useState } from "react";
 import type { GameStatus } from "@/lib/types";
 import { useGameStream, useNow } from "@/hooks/useGameStream";
-import { ageSeconds, health, FRESHNESS_SLO_SECONDS } from "@/lib/slo";
+import { ageSeconds, health, FRESHNESS_SLO_SECONDS, replayLabel } from "@/lib/slo";
 import { GameCard } from "./GameCard";
 import { HealthDot } from "./HealthDot";
 
@@ -51,6 +51,13 @@ export function Scoreboard() {
           </Pill>
         </div>
       </div>
+
+      {games.some((g) => g.replay_of) && (
+        <div className="mb-4 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm text-amber-200">
+          ⏵ <b>Replay mode:</b> real games from {replayLabel(games.find((g) => g.replay_of)!.replay_of!)}, played back through the live pipeline.
+          Tonight&apos;s games appear live when ingest runs with <code className="rounded bg-black/30 px-1">SOURCE=espn</code>.
+        </div>
+      )}
 
       {shown.length ? (
         <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">

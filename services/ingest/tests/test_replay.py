@@ -32,6 +32,7 @@ def test_replay_follows_real_timing(tmp_path, monkeypatch):
     now["t"] = 31
     game = feed.fetch()[0]
     assert (game.away_score, game.status) == (3, "post")
+    assert game.replay_of == "20261104"           # labelled as a replay, never passed off as live
 
 
 def test_speed_and_loop(tmp_path, monkeypatch):
