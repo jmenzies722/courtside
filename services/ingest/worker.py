@@ -7,6 +7,7 @@ import threading
 
 import boto3
 import httpx
+from botocore.exceptions import BotoCoreError, ClientError
 
 from espn import SourceError, fetch_games, fetch_recording
 from replay import ReplayFeed
@@ -97,7 +98,8 @@ def run() -> None:
                 emit(games, sqs, urls.get("game"))
                 failures = 0
                 log.info(json.dumps({"msg": "poll ok", "games": len(games), "plays": len(plays)}))
-            except SourceError as exc:
+            except (SourceError, BotoCoreError, ClientError) as exc:
+                # source down OR queue down: same response. Log, back off, try again next loop.
                 failures += 1
                 log.warning(json.dumps({"msg": "poll failed", "failures": failures,
                                         "retry_in": next_delay(failures), "error": str(exc)[:120]}))
