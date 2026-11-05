@@ -1,0 +1,9 @@
+# Local dependencies for Courtside. Start: docker compose up -d   Stop: docker compose down
+services:
+  sqs:
+    image: softwaremill/elasticmq-native:1.7.1   # pinned: same version every time
+    ports:
+      - "9324:9324"   # SQS API (what the worker talks to)
+      - "9325:9325"   # web UI: http://localhost:9325
+    volumes:
+      - ./local/elasticmq.conf:/opt/elasticmq.conf:ro
