@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --animate-flash: flash 1s ease-out;   /* use as className="animate-flash" */
+}
+
+@keyframes flash {
+  0% { background: rgb(249 115 22 / 0.55); color: #fff; }
+  100% { background: transparent; }
+}
+
+body {
+  background: radial-gradient(1200px 600px at 10% -10%, #1a1f2e 0%, #0b0d12 60%) fixed, #0b0d12;
+  color: #eef1f7;
+}
