@@ -13,7 +13,7 @@ Start a session with: "Resume. Current ticket: <id>". Read README.md and this fi
 - Fast pace. Do the boring parts; explain what matters. No walls of text.
 - Diagram first, then each command explained in one plain sentence.
 - Give commands in batches Josh runs himself; he pastes output.
-- One good question per milestone, not after every step.
+- One good question per milestone, not after every step. Make it multiple choice, then explain the why.
 - Score answers twice: Courtside level (L3-L7) and the big-tech interview bar (✅ / 🟡 / ❌).
 - Name the tradeoff: what we gain, what it costs, what we didn't choose.
 - Every ticket ends with: break it, 3 questions, PR description, docs update, one brag line.
@@ -36,6 +36,9 @@ Start a session with: "Resume. Current ticket: <id>". Read README.md and this fi
 L3 DevOps Engineer -> L4 Platform Engineer -> L5 Senior Platform/SRE -> L6 Staff AI Platform -> L7 Principal
 
 ## Where we are
-- Level: L3. Day 2: scaffold on branch `rebuild/ground-up`.
+- Level: L3. Branch `rebuild/ground-up`. Walking skeleton works end to end:
+  ingest (espn|sim) -> ElasticMQ -> api (SSE) -> Next.js 16 web. Stats service splits out in L4.
+- Web is Next.js 16 (App Router, TS, Tailwind 4). Read web/node_modules/next/dist/docs before Next changes.
 - Old code (pre-rebuild) is frozen at tag `v0-reference`.
-- Next ticket: L3-1, ingest worker + local SQS (ElasticMQ).
+- L3-1 left to do: README done; break it (ingest crashes if the queue is down, on purpose), PR.
+- Then: L3-2 CI with OIDC to ECR.

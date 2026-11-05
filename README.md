@@ -19,11 +19,11 @@ Signals:       OpenTelemetry -> Prometheus / Loki / Tempo -> Grafana -> SLO aler
 
 | Service | Job | Status |
 |---|---|---|
-| `services/ingest` | Fetch live game data, send events to a queue | Planned (L3-1) |
+| `services/ingest` | Fetch live game data (ESPN or fake `sim` feed), send events to a queue | Walking skeleton |
 | `services/stats` | Turn events into scores, box scores, win odds | Planned |
-| `services/api` | Serve the website (REST + live updates) | Planned |
+| `services/api` | Read the queue, keep newest per game, stream live updates (SSE) | Walking skeleton |
 | `services/sim` | Simulate seasons, produce title odds | Planned |
-| `web` | The site fans see | Planned |
+| `web` | Next.js live scoreboard with freshness SLO indicator | Walking skeleton |
 
 ## SLOs (reliability promises)
 
@@ -32,7 +32,16 @@ Signals:       OpenTelemetry -> Prometheus / Loki / Tempo -> Grafana -> SLO aler
 
 ## Run it locally
 
-Coming in L3-1.
+Needs Docker, [uv](https://docs.astral.sh/uv/) and Node. Four terminals:
+
+```bash
+make sqs                 # local queue (ElasticMQ), UI at http://localhost:9325
+make ingest SOURCE=sim   # fake live games (or SOURCE=espn for real ones)
+make api                 # API at http://localhost:8000
+make web                 # scoreboard at http://localhost:3000
+```
+
+`make test` runs every test. `make down` stops the queue.
 
 ## Status
 

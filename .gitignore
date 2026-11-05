@@ -22,3 +22,6 @@ crash.log
 *.pem
 kubeconfig*
 .DS_Store
+
+# Recorded game data from third-party feeds: local only, never published
+local/replays/
